@@ -48,7 +48,7 @@ function App() {
                 <Route path="/" element={<Introduction />} />
                 <Route path="/docs/introduction" element={<Introduction />} />
                 <Route path="/docs/installation" element={<Installation />} />
-                <Route path="/docs/quick-start" element={<QuickStart />} />
+                <Route path="/docs/quickstart" element={<QuickStart />} />
                 <Route path="/docs/architecture" element={<Architecture />} />
                 <Route path="/docs/configuration" element={<Configuration />} />
                 <Route path="/docs/api" element={<ApiDocs />} />

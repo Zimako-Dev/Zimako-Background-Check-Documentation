@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import { searchDocumentation } from '../utils/search';
+import { searchDocumentation, SearchResult } from '../utils/search';
 import { SearchResults } from './SearchResults';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,7 +9,7 @@ export function SearchBar() {
   const [isOpen, setIsOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<SearchResult[]>([]);
 
   // Handle search
   useEffect(() => {
@@ -64,7 +64,7 @@ export function SearchBar() {
   };
 
   return (
-    <div className="w-full max-w-md lg:max-w-lg relative" ref={searchRef}>
+    <div ref={searchRef} className="relative w-full max-w-md lg:max-w-lg">
       <label htmlFor="search" className="sr-only">
         Search documentation
       </label>
@@ -88,12 +88,8 @@ export function SearchBar() {
           </kbd>
         </div>
       </div>
-      {isOpen && (
-        <SearchResults
-          results={results}
-          query={query}
-          onResultClick={handleResultClick}
-        />
+      {isOpen && results.length > 0 && (
+        <SearchResults results={results} onClose={() => setIsOpen(false)} />
       )}
     </div>
   );
