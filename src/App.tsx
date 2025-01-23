@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
@@ -10,21 +10,71 @@ import { Configuration } from './pages/Configuration';
 import { ApiDocs } from './pages/ApiDocs';
 import { SecurityGuide } from './pages/SecurityGuide';
 import { ComplianceGuide } from './pages/ComplianceGuide';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Footer } from './components/Footer';
 
 function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <Router>
       <div className="min-h-screen bg-white dark:bg-gray-900">
         <Header />
-        <div className="mx-auto max-w-8xl px-4 sm:px-6 md:px-8">
+        
+        {/* Mobile menu button */}
+        <div className="fixed bottom-4 right-4 lg:hidden z-50">
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="p-2 rounded-full bg-indigo-600 text-white shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            {sidebarOpen ? (
+              <XMarkIcon className="h-6 w-6" />
+            ) : (
+              <Bars3Icon className="h-6 w-6" />
+            )}
+          </button>
+        </div>
+
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="lg:grid lg:grid-cols-12 lg:gap-8">
-            <aside className="fixed top-16 z-10 hidden h-[calc(100vh-4rem)] w-72 overflow-y-auto lg:block lg:col-span-3">
-              <div className="sticky top-0 pt-10">
-                <Navigation />
+            {/* Sidebar for mobile */}
+            <div
+              className={`fixed inset-0 z-40 lg:hidden ${
+                sidebarOpen ? 'block' : 'hidden'
+              }`}
+              onClick={() => setSidebarOpen(false)}
+            >
+              <div className="fixed inset-0 bg-gray-600 bg-opacity-75" />
+            </div>
+
+            <aside
+              className={`
+                fixed inset-y-0 left-0 z-40 w-72 bg-white dark:bg-gray-900 transform transition-transform duration-300 ease-in-out
+                lg:static lg:translate-x-0 lg:block lg:col-span-3
+                ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+              `}
+            >
+              <div className="h-full overflow-y-auto px-4 py-6 sm:px-6 lg:px-8">
+                <div className="flex items-center justify-between lg:hidden">
+                  <div className="text-xl font-semibold text-gray-900 dark:text-white">
+                    Documentation
+                  </div>
+                  <button
+                    onClick={() => setSidebarOpen(false)}
+                    className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                  >
+                    <XMarkIcon className="h-6 w-6" />
+                  </button>
+                </div>
+                <div className="mt-6 lg:mt-0">
+                  <Navigation />
+                </div>
               </div>
             </aside>
-            <main className="lg:col-span-9 lg:col-start-4 xl:col-span-7 xl:col-start-4 2xl:col-span-8">
-              <div className="pt-10 pb-24">
+
+            {/* Main content */}
+            <main className="lg:col-span-9 w-full">
+              <div className="py-4 lg:py-8">
                 <Routes>
                   <Route path="/docs/introduction" element={<Introduction />} />
                   <Route path="/docs/installation" element={<Installation />} />
@@ -40,6 +90,8 @@ function App() {
             </main>
           </div>
         </div>
+
+        <Footer />
       </div>
     </Router>
   );
