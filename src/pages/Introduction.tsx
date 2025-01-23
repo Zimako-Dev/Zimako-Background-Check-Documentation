@@ -3,33 +3,53 @@ import React from 'react';
 export function Introduction() {
   return (
     <div className="prose dark:prose-invert prose-indigo max-w-none">
-      <h1>Introduction</h1>
+      <h1>Introduction to Zimako Background Check System</h1>
       <p className="lead">
-        Welcome to our comprehensive documentation. This guide will help you understand our platform
-        and make the most of its features.
+        Welcome to the Zimako Background Check System documentation. This comprehensive guide will help you understand
+        our advanced background verification platform and make the most of its powerful features.
       </p>
 
-      <h2>What is Our Platform?</h2>
+      <h2>What is Zimako Background Check System?</h2>
       <p>
-        Our platform is a modern, scalable solution designed to help developers build better
-        applications faster. With a focus on developer experience and best practices, we provide
-        the tools you need to succeed.
+        The Zimako Background Check System is a sophisticated, multi-tenant platform designed to streamline
+        the process of conducting comprehensive background checks. Our system provides real-time verification
+        across multiple domains including personal information, education, employment history, criminal records,
+        and credit information.
       </p>
 
       <h2>Key Features</h2>
       <ul>
-        <li>Modern architecture with best-in-class performance</li>
-        <li>Developer-friendly APIs and extensive documentation</li>
-        <li>Built-in security features and best practices</li>
-        <li>Scalable infrastructure that grows with your needs</li>
+        <li>Multi-tenant architecture with secure company isolation</li>
+        <li>Real-time background check processing and updates</li>
+        <li>Comprehensive verification modules:
+          <ul>
+            <li>Personal Information Verification</li>
+            <li>Education History Checks</li>
+            <li>Employment History Verification</li>
+            <li>Criminal Record Checks</li>
+            <li>Credit Status Assessment</li>
+          </ul>
+        </li>
+        <li>Advanced admin dashboard with detailed analytics</li>
+        <li>Role-based access control with granular permissions</li>
+        <li>Secure document handling and storage</li>
       </ul>
 
-      <h2>Why Choose Us?</h2>
+      <h2>Why Choose Zimako?</h2>
       <p>
-        We combine cutting-edge technology with practical solutions to help you build
-        better applications. Our platform is built by developers, for developers,
-        with a focus on productivity and maintainability.
+        Zimako combines cutting-edge technology with comprehensive verification processes to deliver
+        accurate and reliable background checks. Our platform is built with security and scalability
+        in mind, ensuring that your verification needs are met with the highest standards of
+        data protection and efficiency.
       </p>
+
+      <h2>Target Users</h2>
+      <ul>
+        <li><strong>HR Professionals:</strong> Streamline candidate verification processes</li>
+        <li><strong>Compliance Officers:</strong> Ensure regulatory compliance in hiring</li>
+        <li><strong>Security Teams:</strong> Conduct thorough background investigations</li>
+        <li><strong>Company Administrators:</strong> Manage verification workflows and access controls</li>
+      </ul>
     </div>
   );
 }

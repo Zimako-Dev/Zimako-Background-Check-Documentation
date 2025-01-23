@@ -7,17 +7,17 @@ export const navigation: DocSection[] = [
       {
         title: 'Introduction',
         href: '/docs/introduction',
-        description: 'Learn about the core concepts and architecture.'
+        description: 'Learn about the Zimako Background Check System.'
       },
       {
         title: 'Installation',
         href: '/docs/installation',
-        description: 'Step-by-step guide to install and set up the application.'
+        description: 'Step-by-step guide to install and set up the system.'
       },
       {
         title: 'Quick Start',
         href: '/docs/quickstart',
-        description: 'Get up and running in under 5 minutes.'
+        description: 'Start conducting background checks in minutes.'
       }
     ]
   },
@@ -27,12 +27,37 @@ export const navigation: DocSection[] = [
       {
         title: 'Architecture',
         href: '/docs/architecture',
-        description: 'Understanding the application structure and design patterns.'
+        description: 'Understanding the system structure and design patterns.'
       },
       {
         title: 'Configuration',
         href: '/docs/configuration',
         description: 'Learn about configuration options and customization.'
+      }
+    ]
+  },
+  {
+    title: 'Integration & Development',
+    items: [
+      {
+        title: 'API Documentation',
+        href: '/docs/api',
+        description: 'Complete API reference for system integration.'
+      }
+    ]
+  },
+  {
+    title: 'Security & Compliance',
+    items: [
+      {
+        title: 'Security Guide',
+        href: '/docs/security',
+        description: 'Security features and best practices.'
+      },
+      {
+        title: 'Compliance Guide',
+        href: '/docs/compliance',
+        description: 'Legal compliance and regulatory requirements.'
       }
     ]
   }
