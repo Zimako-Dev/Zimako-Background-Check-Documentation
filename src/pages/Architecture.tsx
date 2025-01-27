@@ -12,23 +12,133 @@ export function Architecture() {
         requests securely and efficiently.
       </p>
 
-      <h2>Core Components</h2>
+      <h2>Core Architecture</h2>
       
       <h3>1. Frontend Architecture</h3>
       <ul>
-        <li><strong>React + TypeScript:</strong> Type-safe frontend development</li>
-        <li><strong>Redux:</strong> Global state management for user and application state</li>
-        <li><strong>React Query:</strong> Server state management and caching</li>
-        <li><strong>Material UI:</strong> Component library with custom dark theme</li>
-        <li><strong>React Router:</strong> Client-side routing and navigation</li>
+        <li><strong>Single Page Application (SPA):</strong> Built with React 18 and TypeScript</li>
+        <li><strong>State Management:</strong>
+          <ul>
+            <li>Centralized state with Redux Toolkit</li>
+            <li>Local state with React hooks</li>
+            <li>Server state and caching with React Query</li>
+            <li>Theme state through ThemeProvider context</li>
+          </ul>
+        </li>
+        <li><strong>Routing & Navigation:</strong>
+          <ul>
+            <li>Protected routing with role-based access</li>
+            <li>Hierarchical route structure</li>
+            <li>Lazy loading for optimized performance</li>
+          </ul>
+        </li>
+        <li><strong>Component Architecture:</strong>
+          <ul>
+            <li>Atomic design principles</li>
+            <li>Smart/Dumb component pattern</li>
+            <li>Container/Presenter pattern</li>
+          </ul>
+        </li>
       </ul>
 
       <h3>2. Backend Services</h3>
       <ul>
-        <li><strong>Firebase Authentication:</strong> User management and authentication</li>
-        <li><strong>Firestore:</strong> NoSQL database for real-time data storage</li>
-        <li><strong>Firebase Security Rules:</strong> Data access control and validation</li>
-        <li><strong>Firebase Cloud Functions:</strong> Serverless background processing</li>
+        <li><strong>Firebase Integration:</strong>
+          <ul>
+            <li>Authentication and user management</li>
+            <li>Firestore for real-time data</li>
+            <li>Security rules and access control</li>
+            <li>Cloud Functions for background tasks</li>
+          </ul>
+        </li>
+        <li><strong>Data Layer:</strong>
+          <ul>
+            <li>Service-based API architecture</li>
+            <li>Abstracted API layer</li>
+            <li>Mock API for development</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h2>Component Architecture</h2>
+
+      <h3>1. Core Components</h3>
+      
+      <h4>Admin Components</h4>
+      <ul>
+        <li><strong>SuperAdmin:</strong> Main admin dashboard interface</li>
+        <li><strong>AdminRoute:</strong> Protected routing for admin access</li>
+        <li><strong>AdminNav:</strong> Admin-specific navigation</li>
+        <li><strong>Admin Pages:</strong>
+          <ul>
+            <li>Companies management</li>
+            <li>User management</li>
+            <li>Reports and analytics</li>
+            <li>Security settings</li>
+            <li>API configuration</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h4>Query Components</h4>
+      <ul>
+        <li><strong>BackgroundCheckResults:</strong> Comprehensive results display (11.2KB)</li>
+        <li><strong>NewBackgroundCheck:</strong> Check initiation form (7.5KB)</li>
+        <li><strong>QueryFilters:</strong> Advanced search and filtering</li>
+        <li><strong>QueryList:</strong> Query management interface</li>
+        <li><strong>QueryStats:</strong> Statistical analysis</li>
+      </ul>
+
+      <h4>Dashboard Components</h4>
+      <ul>
+        <li><strong>DashboardStats:</strong> Overview metrics</li>
+        <li><strong>ActivityFeed:</strong> Real-time monitoring</li>
+        <li><strong>StatCard:</strong> Reusable statistics display</li>
+        <li><strong>QueryTrends:</strong> Trend analysis charts</li>
+      </ul>
+
+      <h3>2. Supporting Components</h3>
+
+      <h4>Layout Components</h4>
+      <ul>
+        <li><strong>Layout:</strong> Main application wrapper</li>
+        <li><strong>Header:</strong> Navigation and controls</li>
+        <li><strong>Sidebar:</strong> Main navigation menu</li>
+        <li><strong>MobileNav:</strong> Responsive navigation</li>
+      </ul>
+
+      <h4>Feature Components</h4>
+      <ul>
+        <li><strong>Authentication:</strong> Login, registration, and recovery</li>
+        <li><strong>Billing:</strong> Invoice and payment management</li>
+        <li><strong>Settings:</strong> User and application preferences</li>
+        <li><strong>Help:</strong> Documentation and support resources</li>
+      </ul>
+
+      <h2>Security Architecture</h2>
+      
+      <h3>1. Authentication & Authorization</h3>
+      <ul>
+        <li>Firebase Authentication integration</li>
+        <li>Custom AuthContext provider</li>
+        <li>Protected route wrappers</li>
+        <li>Role-based permissions system</li>
+      </ul>
+
+      <h3>2. Data Security</h3>
+      <ul>
+        <li>Environment-based configuration</li>
+        <li>Secure credential handling</li>
+        <li>Protected API endpoints</li>
+        <li>CORS and security headers</li>
+      </ul>
+
+      <h2>Performance Optimizations</h2>
+      <ul>
+        <li>Code splitting and lazy loading</li>
+        <li>Efficient state management with React Query</li>
+        <li>Optimized build configuration with Vite</li>
+        <li>Component-level performance optimizations</li>
       </ul>
 
       <h2>Data Model</h2>
@@ -61,66 +171,22 @@ export function Architecture() {
         ├── type: string
         └── config: object`}</code></pre>
 
-      <h2>Security Architecture</h2>
-      
-      <h3>1. Authentication</h3>
-      <ul>
-        <li>Firebase Authentication with email/password</li>
-        <li>JWT-based session management</li>
-        <li>Role-based access control (Admin/User)</li>
-      </ul>
-
-      <h3>2. Data Security</h3>
-      <ul>
-        <li>Company-level data isolation</li>
-        <li>Firestore security rules for access control</li>
-        <li>Field-level security for sensitive data</li>
-        <li>Audit logging for sensitive operations</li>
-      </ul>
-
-      <h2>Component Architecture</h2>
-
-      <h3>1. Admin Dashboard</h3>
-      <ul>
-        <li>Company management interface</li>
-        <li>User management system</li>
-        <li>System-wide analytics</li>
-        <li>Provider configuration</li>
-      </ul>
-
-      <h3>2. User Dashboard</h3>
-      <ul>
-        <li>Background check request interface</li>
-        <li>Real-time status tracking</li>
-        <li>Results visualization</li>
-        <li>Report generation</li>
-      </ul>
-
       <h2>Integration Architecture</h2>
       
       <h3>1. External Services</h3>
       <ul>
-        <li>Criminal record verification APIs</li>
-        <li>Education verification services</li>
-        <li>Employment history validation</li>
-        <li>Credit check integration</li>
+        <li>Background check service providers</li>
+        <li>Payment processing services</li>
+        <li>Notification services</li>
+        <li>Analytics and monitoring</li>
       </ul>
 
-      <h3>2. Internal Services</h3>
+      <h3>2. API Integration</h3>
       <ul>
-        <li>Document processing service</li>
-        <li>Notification system</li>
-        <li>Report generation engine</li>
-        <li>Analytics processing</li>
-      </ul>
-
-      <h2>Scalability Considerations</h2>
-      <ul>
-        <li>Firebase's automatic scaling for database operations</li>
-        <li>Efficient data querying with indexes</li>
-        <li>Optimized React rendering with memoization</li>
-        <li>Lazy loading of components and routes</li>
-        <li>Efficient state management with Redux and React Query</li>
+        <li>RESTful API endpoints</li>
+        <li>Webhook support</li>
+        <li>Rate limiting</li>
+        <li>Error handling</li>
       </ul>
     </div>
   );
