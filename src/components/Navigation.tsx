@@ -1,6 +1,6 @@
 import React from 'react';
 import { navigation } from '../data/navigation';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, NavLink } from 'react-router-dom';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 
 interface NavigationProps {
@@ -57,6 +57,74 @@ export function Navigation({ isMobile, onNavClick }: NavigationProps) {
           </ul>
         </div>
       ))}
+
+      <div>
+        <h3 className="font-semibold text-sm text-gray-900 dark:text-white transition-colors uppercase tracking-wider">
+          Subsystems
+        </h3>
+        <ul className="mt-2 space-y-1">
+          <li>
+            <NavLink
+              to="/docs/subsystems/authentication"
+              className={({ isActive }) =>
+                `block text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white ${
+                  isActive ? 'text-indigo-600 dark:text-indigo-400' : ''
+                }`
+              }
+            >
+              Authentication System
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/docs/subsystems/query-management"
+              className={({ isActive }) =>
+                `block text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white ${
+                  isActive ? 'text-indigo-600 dark:text-indigo-400' : ''
+                }`
+              }
+            >
+              Query Management
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/docs/subsystems/admin-dashboard"
+              className={({ isActive }) =>
+                `block text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white ${
+                  isActive ? 'text-indigo-600 dark:text-indigo-400' : ''
+                }`
+              }
+            >
+              Admin Dashboard
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/docs/subsystems/background-check"
+              className={({ isActive }) =>
+                `block text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white ${
+                  isActive ? 'text-indigo-600 dark:text-indigo-400' : ''
+                }`
+              }
+            >
+              Background Check Processing
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/docs/subsystems/data-management"
+              className={({ isActive }) =>
+                `block text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white ${
+                  isActive ? 'text-indigo-600 dark:text-indigo-400' : ''
+                }`
+              }
+            >
+              Data Management
+            </NavLink>
+          </li>
+        </ul>
+      </div>
 
       {/* Mobile navigation footer */}
       <div className="lg:hidden mt-auto pt-4 border-t border-gray-200 dark:border-gray-700">

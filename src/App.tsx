@@ -11,6 +11,13 @@ import { ApiDocs } from './pages/ApiDocs';
 import { SecurityGuide } from './pages/SecurityGuide';
 import { ComplianceGuide } from './pages/ComplianceGuide';
 import { Footer } from './components/Footer';
+import {
+  AuthenticationSystem,
+  QueryManagement,
+  AdminDashboard,
+  BackgroundCheckProcessing,
+  DataManagement
+} from './pages/subsystems';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -54,6 +61,11 @@ function App() {
                 <Route path="/docs/api" element={<ApiDocs />} />
                 <Route path="/docs/security" element={<SecurityGuide />} />
                 <Route path="/docs/compliance" element={<ComplianceGuide />} />
+                <Route path="/docs/subsystems/authentication" element={<AuthenticationSystem />} />
+                <Route path="/docs/subsystems/query-management" element={<QueryManagement />} />
+                <Route path="/docs/subsystems/admin-dashboard" element={<AdminDashboard />} />
+                <Route path="/docs/subsystems/background-check" element={<BackgroundCheckProcessing />} />
+                <Route path="/docs/subsystems/data-management" element={<DataManagement />} />
               </Routes>
             </main>
           </div>
