@@ -3,35 +3,41 @@ import { MermaidDiagram } from '../../components/diagrams/MermaidDiagram';
 
 export function QueryManagement() {
   const queryFlowDiagram = `
+    %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
     graph TD
-      A[User] --> B[Submit Query]
-      B --> C{Query Manager}
-      C --> D[Validate Request]
-      D --> E[Save Query]
-      E --> F[Database]
-      C --> G[Dispatch to Providers]
-      G --> H[Providers]
-      H --> I[Initial Response]
-      I --> C
-      H --> J[Process Updates]
-      J --> C
-      C --> K[Store Results]
-      K --> F
-      C --> L[Return Results]
-      L --> A
+      Start((●)) --> QueryList[QueryList]
       
-      style A fill:#4f46e5,stroke:#6366f1,color:#fff
-      style B fill:#3730a3,stroke:#6366f1,color:#fff
-      style C fill:#4f46e5,stroke:#6366f1,color:#fff
-      style D fill:#0284c7,stroke:#0ea5e9,color:#fff
-      style E fill:#0284c7,stroke:#0ea5e9,color:#fff
-      style F fill:#059669,stroke:#10b981,color:#fff
-      style G fill:#3730a3,stroke:#6366f1,color:#fff
-      style H fill:#4f46e5,stroke:#6366f1,color:#fff
-      style I fill:#0284c7,stroke:#0ea5e9,color:#fff
-      style J fill:#0284c7,stroke:#0ea5e9,color:#fff
-      style K fill:#059669,stroke:#10b981,color:#fff
-      style L fill:#059669,stroke:#10b981,color:#fff
+      %% Query Management Components
+      QueryList --> QueryFilters[QueryFilters]
+      QueryList --> QueryStats[QueryStats]
+      QueryList --> NewBgCheck[NewBackgroundCheck]
+      
+      QueryFilters --> FilterComp[FilterComponent]
+      QueryStats --> StatsDisp[StatsDisplay]
+      NewBgCheck --> BgResults[BackgroundCheckResults]
+      
+      %% Processing Flow
+      QueryFilters --> Pending[Pending]
+      Pending --> Processing[Processing]
+      Processing --> InProgress[InProgress]
+      InProgress --> Completed[Completed]
+      InProgress --> Failed[Failed]
+      Processing --> Failed
+      Failed --> Pending
+      
+      style Start fill:#4f46e5,stroke:#6366f1
+      style QueryList fill:#4f46e5,stroke:#6366f1,color:#fff
+      style QueryFilters fill:#4f46e5,stroke:#6366f1,color:#fff
+      style QueryStats fill:#4f46e5,stroke:#6366f1,color:#fff
+      style NewBgCheck fill:#4f46e5,stroke:#6366f1,color:#fff
+      style FilterComp fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style StatsDisp fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style BgResults fill:#059669,stroke:#10b981,color:#fff
+      style Pending fill:#4f46e5,stroke:#6366f1,color:#fff
+      style Processing fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style InProgress fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style Completed fill:#059669,stroke:#10b981,color:#fff
+      style Failed fill:#dc2626,stroke:#ef4444,color:#fff
   `;
 
   const queryComponentsDiagram = `
@@ -81,14 +87,31 @@ export function QueryManagement() {
         different verification types and providers.
       </p>
 
-      <h2>Query Processing Flow</h2>
+      <h2>Component Architecture</h2>
       <MermaidDiagram chart={queryFlowDiagram} />
       <p>
-        This diagram illustrates the complete flow of a background check query, from submission
-        to results delivery, including all system interactions.
+        This diagram illustrates the complete structure of the query management system, showing both
+        the UI components and the processing flow states:
       </p>
+      <ul>
+        <li><strong>UI Components:</strong>
+          <ul>
+            <li>QueryList: Main container component</li>
+            <li>QueryFilters: For filtering and search</li>
+            <li>QueryStats: Displays statistics and metrics</li>
+            <li>NewBackgroundCheck: For initiating new checks</li>
+          </ul>
+        </li>
+        <li><strong>Processing States:</strong>
+          <ul>
+            <li>Pending → Processing → InProgress</li>
+            <li>Success path: → Completed</li>
+            <li>Error path: → Failed (with retry option)</li>
+          </ul>
+        </li>
+      </ul>
 
-      <h2>Component Architecture</h2>
+      <h2>Query Components</h2>
       <MermaidDiagram chart={queryComponentsDiagram} />
       <p>
         The component hierarchy shows how different parts of the query management system interact
