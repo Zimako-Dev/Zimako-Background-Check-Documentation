@@ -38,51 +38,87 @@ export function BackgroundCheckProcessing() {
   `;
 
   const providerIntegrationDiagram = `
-    sequenceDiagram
-      participant C as Coordinator
-      participant P as Provider Pool
-      participant V as Verification
-      participant Q as Quality Control
+    graph TD
+      A[Request] --> B{Load Balancer}
+      B --> C[Provider Pool]
       
-      C->>P: Request Provider
-      P->>P: Load Balancing
-      P->>V: Assign Provider
-      V->>V: Process Check
-      V-->>Q: Submit Results
-      Q->>Q: Validate Results
-      Q-->>C: Return Results
+      C --> D[Provider 1]
+      C --> E[Provider 2]
+      C --> F[Provider 3]
       
+      D --> G[Verification Process]
+      E --> G
+      F --> G
+      
+      G --> H{Quality Check}
+      H -->|Pass| I[Result Storage]
+      H -->|Fail| J[Fallback Provider]
+      J --> G
+      
+      I --> K[Response]
+      
+      style A fill:#4f46e5,stroke:#6366f1,color:#fff
+      style B fill:#3730a3,stroke:#6366f1,color:#fff
       style C fill:#4f46e5,stroke:#6366f1,color:#fff
-      style P fill:#3730a3,stroke:#6366f1,color:#fff
-      style V fill:#059669,stroke:#10b981,color:#fff
-      style Q fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style D fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style E fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style F fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style G fill:#059669,stroke:#10b981,color:#fff
+      style H fill:#3730a3,stroke:#6366f1,color:#fff
+      style I fill:#059669,stroke:#10b981,color:#fff
+      style J fill:#dc2626,stroke:#ef4444,color:#fff
+      style K fill:#4f46e5,stroke:#6366f1,color:#fff
   `;
 
   const errorHandlingDiagram = `
-    stateDiagram-v2
-      [*] --> Processing
-      Processing --> ProviderError: API Error
-      Processing --> TimeoutError: No Response
-      Processing --> ValidationError: Invalid Data
-      ProviderError --> RetryQueue: Auto-Retry
-      TimeoutError --> RetryQueue: Auto-Retry
-      ValidationError --> ManualReview: Review
-      RetryQueue --> Processing: Retry
-      RetryQueue --> ManualReview: Max Retries
-      ManualReview --> Processing: Fixed
-      ManualReview --> Failed: Unfixable
-      Processing --> Complete: Success
-      Complete --> [*]
-      Failed --> [*]
+    graph TD
+      A[Error Detected] --> B{Error Type}
+      B -->|Provider Error| C[Retry Logic]
+      B -->|Data Error| D[Validation]
+      B -->|System Error| E[System Monitor]
       
-      style Processing fill:#4f46e5,stroke:#6366f1,color:#fff
-      style ProviderError fill:#dc2626,stroke:#ef4444,color:#fff
-      style TimeoutError fill:#dc2626,stroke:#ef4444,color:#fff
-      style ValidationError fill:#dc2626,stroke:#ef4444,color:#fff
-      style RetryQueue fill:#3730a3,stroke:#6366f1,color:#fff
-      style ManualReview fill:#0284c7,stroke:#0ea5e9,color:#fff
-      style Complete fill:#059669,stroke:#10b981,color:#fff
-      style Failed fill:#dc2626,stroke:#ef4444,color:#fff
+      C --> F{Retry Count}
+      F -->|< Max| G[Wait Interval]
+      G --> H[Retry Request]
+      H --> I{Success?}
+      I -->|Yes| J[Continue Process]
+      I -->|No| F
+      F -->|>= Max| K[Manual Review]
+      
+      D --> L[Data Correction]
+      L --> M[Revalidate]
+      M --> N{Valid?}
+      N -->|Yes| J
+      N -->|No| O[Error Report]
+      
+      E --> P[Log Error]
+      P --> Q[Alert Admin]
+      Q --> R[System Check]
+      R --> S{Resolved?}
+      S -->|Yes| T[Resume Process]
+      S -->|No| U[Escalate]
+      
+      style A fill:#dc2626,stroke:#ef4444,color:#fff
+      style B fill:#4f46e5,stroke:#6366f1,color:#fff
+      style C fill:#3730a3,stroke:#6366f1,color:#fff
+      style D fill:#3730a3,stroke:#6366f1,color:#fff
+      style E fill:#3730a3,stroke:#6366f1,color:#fff
+      style F fill:#4f46e5,stroke:#6366f1,color:#fff
+      style G fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style H fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style I fill:#4f46e5,stroke:#6366f1,color:#fff
+      style J fill:#059669,stroke:#10b981,color:#fff
+      style K fill:#dc2626,stroke:#ef4444,color:#fff
+      style L fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style M fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style N fill:#4f46e5,stroke:#6366f1,color:#fff
+      style O fill:#dc2626,stroke:#ef4444,color:#fff
+      style P fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style Q fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style R fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style S fill:#4f46e5,stroke:#6366f1,color:#fff
+      style T fill:#059669,stroke:#10b981,color:#fff
+      style U fill:#dc2626,stroke:#ef4444,color:#fff
   `;
 
   return (
@@ -166,30 +202,29 @@ export function BackgroundCheckProcessing() {
       <h2>Provider Integration</h2>
       <MermaidDiagram chart={providerIntegrationDiagram} />
       <p>
-        The sequence diagram shows how the system coordinates with various providers, including
-        load balancing, verification processing, and quality control steps.
+        This diagram shows how the system coordinates with various providers, including load balancing,
+        verification processing, and quality control steps.
       </p>
 
       <h3>1. Provider Management</h3>
-      <pre><code>{`{
+      <pre className="bg-gray-800 text-gray-100 rounded-lg p-4">
+{`{
   providerId: string,
   name: string,
   type: string[],
   config: {
-    apiKey: string,
+    apikey: string,
     endpoint: string,
     timeout: number,
-    retryPolicy: {
-      maxAttempts: number,
-      backoffMs: number
-    }
+    retryLimit: number
   },
   status: {
     active: boolean,
-    healthCheck: timestamp,
-    errorRate: number
+    health: number,
+    lastCheck: timestamp
   }
-}`}</code></pre>
+}`}
+      </pre>
 
       <h3>2. Integration Features</h3>
       <ul>
@@ -220,24 +255,13 @@ export function BackgroundCheckProcessing() {
       <h2>Error Handling</h2>
       <MermaidDiagram chart={errorHandlingDiagram} />
       <p>
-        This state diagram demonstrates the comprehensive error handling system, including
-        automatic retries, manual review processes, and final state resolutions.
+        This state diagram demonstrates the comprehensive error handling system, including automatic retries,
+        manual review processes, and final state resolutions. The system handles three main types of errors:
       </p>
-
-      <h3>1. Processing Errors</h3>
       <ul>
-        <li>Provider errors</li>
-        <li>Validation errors</li>
-        <li>System errors</li>
-        <li>Timeout handling</li>
-      </ul>
-
-      <h3>2. Recovery Procedures</h3>
-      <ul>
-        <li>Automatic retry</li>
-        <li>Manual intervention</li>
-        <li>Error notification</li>
-        <li>Status recovery</li>
+        <li><strong>Provider Errors:</strong> Issues with third-party data providers, handled through automatic retries</li>
+        <li><strong>Data Errors:</strong> Invalid or incomplete data that requires validation and correction</li>
+        <li><strong>System Errors:</strong> Internal system issues that need administrative attention</li>
       </ul>
 
       <h2>Performance Optimization</h2>

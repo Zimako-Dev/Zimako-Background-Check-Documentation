@@ -3,26 +3,35 @@ import { MermaidDiagram } from '../../components/diagrams/MermaidDiagram';
 
 export function QueryManagement() {
   const queryFlowDiagram = `
-    sequenceDiagram
-      participant U as User
-      participant QM as Query Manager
-      participant P as Providers
-      participant DB as Database
+    graph TD
+      A[User] --> B[Submit Query]
+      B --> C{Query Manager}
+      C --> D[Validate Request]
+      D --> E[Save Query]
+      E --> F[Database]
+      C --> G[Dispatch to Providers]
+      G --> H[Providers]
+      H --> I[Initial Response]
+      I --> C
+      H --> J[Process Updates]
+      J --> C
+      C --> K[Store Results]
+      K --> F
+      C --> L[Return Results]
+      L --> A
       
-      U->>QM: Submit Query
-      QM->>QM: Validate Request
-      QM->>DB: Save Query
-      QM->>P: Dispatch to Providers
-      P-->>QM: Initial Response
-      QM->>DB: Update Status
-      P-->>QM: Process Updates
-      QM->>DB: Store Results
-      QM-->>U: Return Results
-      
-      style U fill:#4f46e5,stroke:#6366f1,color:#fff
-      style QM fill:#3730a3,stroke:#6366f1,color:#fff
-      style P fill:#059669,stroke:#10b981,color:#fff
-      style DB fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style A fill:#4f46e5,stroke:#6366f1,color:#fff
+      style B fill:#3730a3,stroke:#6366f1,color:#fff
+      style C fill:#4f46e5,stroke:#6366f1,color:#fff
+      style D fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style E fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style F fill:#059669,stroke:#10b981,color:#fff
+      style G fill:#3730a3,stroke:#6366f1,color:#fff
+      style H fill:#4f46e5,stroke:#6366f1,color:#fff
+      style I fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style J fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style K fill:#059669,stroke:#10b981,color:#fff
+      style L fill:#059669,stroke:#10b981,color:#fff
   `;
 
   const queryComponentsDiagram = `
@@ -75,7 +84,7 @@ export function QueryManagement() {
       <h2>Query Processing Flow</h2>
       <MermaidDiagram chart={queryFlowDiagram} />
       <p>
-        This sequence diagram illustrates the complete flow of a background check query, from submission
+        This diagram illustrates the complete flow of a background check query, from submission
         to results delivery, including all system interactions.
       </p>
 

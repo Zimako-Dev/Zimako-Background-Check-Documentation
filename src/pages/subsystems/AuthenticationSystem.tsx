@@ -2,70 +2,95 @@ import React from 'react';
 import { MermaidDiagram } from '../../components/diagrams/MermaidDiagram';
 
 export function AuthenticationSystem() {
+  const authComponentsDiagram = `
+    graph TD
+      A[Auth Provider] --> B[Admin Access]
+      A --> C[Company Access]
+      A --> D[User Access]
+      
+      B --> E[System Config]
+      B --> F[User Management]
+      
+      C --> G[Company Data]
+      C --> H[Report Management]
+      
+      D --> I[Personal Data]
+      D --> J[Query Management]
+      
+      style A fill:#4f46e5,stroke:#6366f1,color:#fff
+      style B fill:#818cf8,stroke:#6366f1,color:#fff
+      style C fill:#60a5fa,stroke:#3b82f6,color:#fff
+      style D fill:#818cf8,stroke:#6366f1,color:#fff
+      style E fill:#059669,stroke:#10b981,color:#fff
+      style F fill:#059669,stroke:#10b981,color:#fff
+      style G fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style H fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style I fill:#6366f1,stroke:#818cf8,color:#fff
+      style J fill:#6366f1,stroke:#818cf8,color:#fff
+  `;
+
+  const rbacDiagram = `
+    graph TD
+      A[Super Admin] --> B[System Admin]
+      A --> C[Company Admin]
+      B --> D[User Manager]
+      B --> E[Report Manager]
+      C --> F[Company User]
+      C --> G[Company Viewer]
+      
+      subgraph Permissions
+        H[Full Access]
+        I[System Config]
+        J[User Management]
+        K[Report Access]
+        L[Data Access]
+        M[View Only]
+      end
+      
+      A -.-> H
+      B -.-> I
+      B -.-> J
+      D -.-> J
+      E -.-> K
+      F -.-> L
+      G -.-> M
+      
+      style A fill:#4f46e5,stroke:#6366f1,color:#fff
+      style B fill:#3730a3,stroke:#6366f1,color:#fff
+      style C fill:#3730a3,stroke:#6366f1,color:#fff
+      style D fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style E fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style F fill:#059669,stroke:#10b981,color:#fff
+      style G fill:#059669,stroke:#10b981,color:#fff
+      style H fill:#4f46e5,stroke:#6366f1,color:#fff
+      style I fill:#3730a3,stroke:#6366f1,color:#fff
+      style J fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style K fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style L fill:#059669,stroke:#10b981,color:#fff
+      style M fill:#6366f1,stroke:#818cf8,color:#fff
+  `;
+
   const authFlowDiagram = `
     graph TD
-      A[User Login Request] --> B{Validate Credentials}
-      B -->|Valid| C[Generate JWT Token]
-      B -->|Invalid| D[Return Error]
-      C --> E[Set User Context]
-      E --> F[Access Protected Route]
+      A[Start] --> B[User Login]
+      B --> C{Validate Credentials}
+      C -->|Invalid| D[Error Message]
+      D --> B
+      C -->|Valid| E[Generate Token]
+      E --> F[Set User Context]
       F --> G{Check Permissions}
-      G -->|Authorized| H[Grant Access]
-      G -->|Unauthorized| I[Deny Access]
+      G -->|Denied| H[Access Denied]
+      G -->|Granted| I[Access Resource]
       
       style A fill:#4f46e5,stroke:#6366f1,color:#fff
       style B fill:#3730a3,stroke:#6366f1,color:#fff
       style C fill:#4f46e5,stroke:#6366f1,color:#fff
       style D fill:#dc2626,stroke:#ef4444,color:#fff
-      style E fill:#4f46e5,stroke:#6366f1,color:#fff
-      style F fill:#3730a3,stroke:#6366f1,color:#fff
-      style G fill:#3730a3,stroke:#6366f1,color:#fff
-      style H fill:#059669,stroke:#10b981,color:#fff
-      style I fill:#dc2626,stroke:#ef4444,color:#fff
-  `;
-
-  const authComponentsDiagram = `
-    graph LR
-      A[AuthProvider] --> B[useAuth Hook]
-      A --> C[ProtectedRoute]
-      A --> D[AdminRoute]
-      B --> E[Login Component]
-      B --> F[Register Component]
-      B --> G[Profile Component]
-      
-      style A fill:#4f46e5,stroke:#6366f1,color:#fff
-      style B fill:#3730a3,stroke:#6366f1,color:#fff
-      style C fill:#4f46e5,stroke:#6366f1,color:#fff
-      style D fill:#4f46e5,stroke:#6366f1,color:#fff
-      style E fill:#3730a3,stroke:#6366f1,color:#fff
-      style F fill:#3730a3,stroke:#6366f1,color:#fff
-      style G fill:#3730a3,stroke:#6366f1,color:#fff
-  `;
-
-  const rbacDiagram = `
-    graph TD
-      A[User] --> B{Role}
-      B -->|Admin| C[Full Access]
-      B -->|Manager| D[Company Access]
-      B -->|User| E[Limited Access]
-      C --> F[System Config]
-      C --> G[User Management]
-      D --> H[Company Data]
-      D --> I[Team Management]
-      E --> J[Personal Data]
-      E --> K[Query Management]
-      
-      style A fill:#4f46e5,stroke:#6366f1,color:#fff
-      style B fill:#3730a3,stroke:#6366f1,color:#fff
-      style C fill:#059669,stroke:#10b981,color:#fff
-      style D fill:#0284c7,stroke:#0ea5e9,color:#fff
-      style E fill:#6366f1,stroke:#818cf8,color:#fff
-      style F fill:#059669,stroke:#10b981,color:#fff
-      style G fill:#059669,stroke:#10b981,color:#fff
-      style H fill:#0284c7,stroke:#0ea5e9,color:#fff
-      style I fill:#0284c7,stroke:#0ea5e9,color:#fff
-      style J fill:#6366f1,stroke:#818cf8,color:#fff
-      style K fill:#6366f1,stroke:#818cf8,color:#fff
+      style E fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style F fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style G fill:#4f46e5,stroke:#6366f1,color:#fff
+      style H fill:#dc2626,stroke:#ef4444,color:#fff
+      style I fill:#059669,stroke:#10b981,color:#fff
   `;
 
   return (
@@ -74,8 +99,37 @@ export function AuthenticationSystem() {
 
       <h2>Overview</h2>
       <p>
-        The Authentication System provides secure user authentication, authorization, and session management
-        using Firebase Authentication and custom implementations for role-based access control.
+        The Authentication System manages user access, roles, and permissions across the platform.
+        It ensures secure access to resources while maintaining proper authorization levels for different user types.
+      </p>
+
+      <h2>Authentication Components</h2>
+      <MermaidDiagram chart={authComponentsDiagram} />
+      <p>
+        This diagram shows the relationship between authentication components and how they interact with the AuthProvider context.
+      </p>
+
+      <h2>Role-Based Access Control</h2>
+      <MermaidDiagram chart={rbacDiagram} />
+      <p>
+        The RBAC diagram demonstrates the hierarchical permission structure and access levels for different user roles in the system.
+        Each role has specific permissions that determine what actions they can perform:
+      </p>
+      <ul>
+        <li><strong>Super Admin:</strong> Has full system access and can manage all aspects of the platform</li>
+        <li><strong>System Admin:</strong> Can configure system settings and manage users</li>
+        <li><strong>Company Admin:</strong> Has full access to their company's data and user management</li>
+        <li><strong>User Manager:</strong> Can manage users within their assigned scope</li>
+        <li><strong>Report Manager:</strong> Has access to reporting features and data analysis</li>
+        <li><strong>Company User:</strong> Can perform standard operations within their company</li>
+        <li><strong>Company Viewer:</strong> Has read-only access to company data</li>
+      </ul>
+
+      <h2>Authentication Flow</h2>
+      <h3>1. User Login Process</h3>
+      <MermaidDiagram chart={authFlowDiagram} />
+      <p>
+        This diagram illustrates the step-by-step process of user authentication, from login to resource access.
       </p>
 
       <h2>Core Components</h2>
@@ -115,46 +169,6 @@ export function AuthenticationSystem() {
             <li>Company-specific access control</li>
           </ul>
         </li>
-      </ul>
-
-      <h2>Authentication Flow</h2>
-      <MermaidDiagram chart={authFlowDiagram} />
-      <p>
-        The diagram above illustrates the complete authentication flow from user login to accessing
-        protected routes, including validation, token generation, and permission checks.
-      </p>
-
-      <h2>Component Architecture</h2>
-      <MermaidDiagram chart={authComponentsDiagram} />
-      <p>
-        This diagram shows the relationship between authentication components and how they interact
-        with the AuthProvider context.
-      </p>
-
-      <h2>Role-Based Access Control</h2>
-      <MermaidDiagram chart={rbacDiagram} />
-      <p>
-        The RBAC diagram demonstrates the hierarchical permission structure and access levels for
-        different user roles in the system.
-      </p>
-
-      <h2>Authentication Flow</h2>
-      
-      <h3>1. User Login Process</h3>
-      <ol>
-        <li>User submits credentials</li>
-        <li>Firebase Authentication validation</li>
-        <li>Custom claims verification</li>
-        <li>Role and permissions assignment</li>
-        <li>Session establishment</li>
-      </ol>
-
-      <h3>2. Session Management</h3>
-      <ul>
-        <li>JWT token handling</li>
-        <li>Automatic token refresh</li>
-        <li>Session timeout handling</li>
-        <li>Multiple device session management</li>
       </ul>
 
       <h2>Security Features</h2>

@@ -33,29 +33,40 @@ export function AdminDashboard() {
   `;
 
   const adminWorkflowDiagram = `
-    sequenceDiagram
-      participant A as Admin
-      participant C as Company
-      participant U as Users
-      participant S as System
-      
-      A->>C: Create Company
-      C->>S: Configure Settings
-      A->>U: Create Admin User
-      U->>C: Assign to Company
-      C->>S: Set Permissions
-      S-->>C: Apply Configuration
-      C-->>U: Grant Access
-      U-->>A: Confirmation
+    graph TD
+      A[Admin] --> B[Create Company]
+      B --> C[Company]
+      C --> D[Configure Settings]
+      D --> E[System]
+      A --> F[Create Admin User]
+      F --> G[Users]
+      G --> H[Assign to Company]
+      H --> C
+      C --> I[Set Permissions]
+      I --> E
+      E --> J[Apply Configuration]
+      J --> C
+      C --> K[Grant Access]
+      K --> G
+      G --> L[Confirmation]
+      L --> A
       
       style A fill:#4f46e5,stroke:#6366f1,color:#fff
-      style C fill:#3730a3,stroke:#6366f1,color:#fff
-      style U fill:#059669,stroke:#10b981,color:#fff
-      style S fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style B fill:#3730a3,stroke:#6366f1,color:#fff
+      style C fill:#4f46e5,stroke:#6366f1,color:#fff
+      style D fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style E fill:#059669,stroke:#10b981,color:#fff
+      style F fill:#3730a3,stroke:#6366f1,color:#fff
+      style G fill:#4f46e5,stroke:#6366f1,color:#fff
+      style H fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style I fill:#0284c7,stroke:#0ea5e9,color:#fff
+      style J fill:#059669,stroke:#10b981,color:#fff
+      style K fill:#059669,stroke:#10b981,color:#fff
+      style L fill:#0284c7,stroke:#0ea5e9,color:#fff
   `;
 
   const adminDataFlowDiagram = `
-    graph LR
+    graph TD
       A[Admin Actions] --> B{Access Control}
       B -->|Authorized| C[Data Layer]
       B -->|Unauthorized| D[Error]
@@ -247,7 +258,7 @@ export function AdminDashboard() {
       <h2>Company Setup Workflow</h2>
       <MermaidDiagram chart={adminWorkflowDiagram} />
       <p>
-        The sequence diagram demonstrates the workflow for setting up a new company in the system,
+        The diagram demonstrates the workflow for setting up a new company in the system,
         including user creation and permission assignment.
       </p>
 
